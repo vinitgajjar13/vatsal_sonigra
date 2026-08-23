@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { personalInfo } from '../data/portfolioData';
 import { ArrowUpRight, CheckCircle2, FileText, Cpu, Crosshair } from 'lucide-react';
-import vatsalImage from '../assets/images/vatsal-sonigra.jpg';
+import vatsalImage from "../../assets/vatsal_image.png";
 
 interface AboutSectionProps {
   onContactClick: () => void;
