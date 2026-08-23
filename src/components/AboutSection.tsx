@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { personalInfo } from '../data/portfolioData';
 import { ArrowUpRight, CheckCircle2, FileText, Cpu, Crosshair } from 'lucide-react';
+import vatsalImage from '../assets/images/vatsal-sonigra.jpg';
 
 interface AboutSectionProps {
   onContactClick: () => void;
@@ -53,7 +54,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               {/* Image Frame with Refined Editorial Treatment */}
               <div className="relative aspect-[4/5] overflow-hidden bg-[#393E46]/10 border border-[#929AAB]/30">
                 <img
-                  src="assets/vatsal_image.png"
+                  src={vatsalImage}
                   alt="Vatsal Sonigra - Electrical Design Engineer"
                   className="w-full h-full object-cover object-center grayscale contrast-115 filter transition-all duration-500 hover:grayscale-0 hover:scale-[1.02]"
                   referrerPolicy="no-referrer"
