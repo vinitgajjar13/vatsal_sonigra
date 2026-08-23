@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { personalInfo } from '../data/portfolioData';
 import { Mail, ArrowUpRight, Copy, Check, MapPin, Linkedin, Send } from 'lucide-react';
+import { SectionHeader } from './animations/SectionHeader';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -37,30 +38,31 @@ export const ContactSection: React.FC = () => {
 
       <div className="max-w-3xl mx-auto relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-12 sm:mb-16">
-          <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#929AAB] uppercase block mb-3">
-            [ CONTACT ]
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-normal text-[#393E46] tracking-tight mb-4 font-serif">
-            Let's Connect
-          </h2>
-          <p className="text-sm sm:text-base text-[#393E46]/80 leading-relaxed font-sans">
-            Have a project in mind, an inquiry, or want to collaborate? Send a message below.
-          </p>
-        </div>
+        {/* Section Header with Expanding CAD Axis Line & Blur Title */}
+        <SectionHeader
+          index="[ SECTION 04 // CONTACT ]"
+          title="Let's Connect"
+          subtitle="Have a project in mind, an inquiry, or want to collaborate? Send a message below."
+          align="center"
+          className="mb-12 sm:mb-16"
+        />
 
         {/* Minimalist Contact Form Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#F7F7F7] border border-[#929AAB]/30 p-8 sm:p-12 shadow-xs"
         >
           {isSent ? (
-            <div className="py-10 text-center space-y-4">
-              <div className="w-12 h-12 bg-[#393E46] text-[#F7F7F7] flex items-center justify-center mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="py-10 text-center space-y-4"
+            >
+              <div className="w-12 h-12 bg-[#393E46] text-[#F7F7F7] flex items-center justify-center mx-auto shadow-xs">
                 <Check className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-normal text-[#393E46] font-serif">
@@ -72,8 +74,10 @@ export const ContactSection: React.FC = () => {
                   {personalInfo.email}
                 </a>.
               </p>
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   setIsSent(false);
                   setName('');
@@ -84,8 +88,8 @@ export const ContactSection: React.FC = () => {
                 className="mt-4 px-6 py-2.5 bg-[#EEEEEE] border border-[#929AAB]/30 text-xs font-mono uppercase tracking-wider text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] transition-colors cursor-pointer"
               >
                 Send Another Message
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               
@@ -155,14 +159,16 @@ export const ContactSection: React.FC = () => {
 
               {/* Submit Button */}
               <div>
-                <button
+                <motion.button
                   type="submit"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#393E46] text-[#F7F7F7] text-xs font-semibold uppercase tracking-wider hover:bg-[#393E46]/90 transition-colors cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#393E46] text-[#F7F7F7] text-xs font-semibold uppercase tracking-wider hover:bg-[#393E46]/90 transition-all cursor-pointer shadow-xs"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" />
                   <span>Send Message</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                </motion.button>
               </div>
             </form>
           )}
@@ -197,11 +203,11 @@ export const ContactSection: React.FC = () => {
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1 hover:underline text-[#393E46]"
+                className="inline-flex items-center gap-1 hover:underline text-[#393E46] group"
               >
                 <Linkedin className="w-3.5 h-3.5 text-[#929AAB]" />
                 <span>LinkedIn</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
               </a>
             </div>
           </div>

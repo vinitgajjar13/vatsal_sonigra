@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { IntroScreen } from './components/IntroScreen';
+import { CustomCursor } from './components/animations/CustomCursor';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { AllProjectsPage } from './components/AllProjectsPage';
 import { SkillsSection } from './components/SkillsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -19,6 +21,7 @@ export default function App() {
     return true;
   });
 
+  const [currentView, setCurrentView] = useState<'home' | 'all-projects'>('home');
   const [activeSection, setActiveSection] = useState('hero');
 
   const { scrollYProgress } = useScroll();
@@ -35,15 +38,44 @@ export default function App() {
     setShowIntro(false);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleNavigate = (sectionId: string) => {
+    if (currentView !== 'home') {
+      setCurrentView('home');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 80);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
-  // Active section observer on scroll
+  const handleViewAllProjects = () => {
+    setCurrentView('all-projects');
+  };
+
+  const handleBackToHome = (targetSection = 'projects') => {
+    setCurrentView('home');
+    setTimeout(() => {
+      const el = document.getElementById(targetSection);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 80);
+  };
+
+  // Active section observer on scroll (when on home page)
   useEffect(() => {
+    if (currentView !== 'home') {
+      setActiveSection('projects');
+      return;
+    }
+
     const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
     
     const handleScroll = () => {
@@ -64,10 +96,13 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [currentView]);
 
   return (
     <>
+      {/* Precision CAD Custom Cursor for Desktop */}
+      <CustomCursor />
+
       {/* 0. Fullscreen Minimalist Intro Screen with Typing Animation */}
       <AnimatePresence mode="wait">
         {showIntro && (
@@ -86,36 +121,60 @@ export default function App() {
         {/* Navigation Bar */}
         <Navbar 
           activeSection={activeSection}
-          onNavigate={scrollToSection}
+          onNavigate={handleNavigate}
         />
 
-        <main>
-          {/* 1. Hero Section (Spacious, Typography-Driven, animated CAD linework) */}
-          <HeroSection 
-            onViewWork={() => scrollToSection('projects')}
-            onGetInTouch={() => scrollToSection('contact')}
-          />
+        <AnimatePresence mode="wait">
+          {currentView === 'home' ? (
+            <motion.main
+              key="home-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* 1. Hero Section (Spacious, Typography-Driven, animated CAD linework) */}
+              <HeroSection 
+                onViewWork={() => handleNavigate('projects')}
+                onGetInTouch={() => handleNavigate('contact')}
+              />
 
-          {/* 2. About Section (Editorial Portrait with Technical Frame, Biography & Info Block) */}
-          <AboutSection 
-            onContactClick={() => scrollToSection('contact')}
-          />
+              {/* 2. About Section (Editorial Portrait with Technical Frame, Biography & Info Block) */}
+              <AboutSection 
+                onContactClick={() => handleNavigate('contact')}
+              />
 
-          {/* 3. Selected Work / Projects Section (Large Project Cards & Full Specification Modal) */}
-          <ProjectsSection 
-            onStartInquiry={(_projectName) => scrollToSection('contact')}
-          />
+              {/* 3. Selected Work / Projects Section (Displays 3 Featured Projects + View All Button) */}
+              <ProjectsSection 
+                onStartInquiry={(_projectName) => handleNavigate('contact')}
+                onViewAllProjects={handleViewAllProjects}
+              />
 
-          {/* 4. Skills & Expertise (Electrical Design, AutoCAD, Professional Skills) */}
-          <SkillsSection />
+              {/* 4. Skills & Expertise (Electrical Design, AutoCAD, Professional Skills) */}
+              <SkillsSection />
 
-          {/* 5. Contact Section ("Let's Connect") */}
-          <ContactSection />
-        </main>
+              {/* 5. Contact Section ("Let's Connect") */}
+              <ContactSection />
+            </motion.main>
+          ) : (
+            <motion.main
+              key="all-projects-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AllProjectsPage 
+                onBackToHome={handleBackToHome}
+                onContactClick={() => handleNavigate('contact')}
+              />
+            </motion.main>
+          )}
+        </AnimatePresence>
 
         {/* 6. Footer (Minimal, Technical, Back to Top) */}
         <Footer 
-          onNavigate={scrollToSection}
+          onNavigate={handleNavigate}
         />
 
       </div>

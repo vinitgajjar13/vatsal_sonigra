@@ -33,10 +33,13 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
   };
 
   return (
-    <header 
+    <motion.header 
+      initial={{ opacity: 0, y: -15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-[#F7F7F7]/90 backdrop-blur-md border-b border-[#929AAB]/20 py-3 shadow-xs' 
+          ? 'bg-[#F7F7F7]/92 backdrop-blur-md border-b border-[#929AAB]/20 py-3 shadow-xs' 
           : 'bg-transparent py-5 sm:py-6'
       }`}
     >
@@ -51,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
             VS
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-sm sm:text-base tracking-[0.08em] uppercase text-[#393E46] leading-none font-sans">
+            <span className="font-bold text-sm sm:text-base tracking-[0.08em] uppercase text-[#393E46] leading-none font-sans group-hover:text-black transition-colors">
               VATSAL SONIGRA
             </span>
             <span className="text-[10px] font-mono tracking-wider text-[#929AAB] uppercase mt-1">
@@ -77,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
                   <motion.div
                     layoutId="activeNavIndicator"
                     className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-[#393E46]"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
               </button>
@@ -87,13 +90,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
 
         {/* Right CTA Button (Desktop) */}
         <div className="hidden md:flex items-center">
-          <button
+          <motion.button
             onClick={() => handleLinkClick('contact')}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider uppercase border border-[#393E46] text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#393E46]"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider uppercase border border-[#393E46] text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#393E46]"
           >
             <span>Get in Touch</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+          </motion.button>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -143,6 +148,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };

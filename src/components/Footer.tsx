@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { 
   ArrowUp, 
   ArrowUpRight, 
@@ -30,6 +31,14 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+
+  const footerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ['start end', 'end end'],
+  });
+
+  const watermarkY = useTransform(scrollYProgress, [0, 1], [30, 0]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -64,7 +73,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <footer className="bg-[#EEEEEE] text-[#393E46] pt-16 pb-8 px-6 sm:px-10 lg:px-16 border-t border-[#929AAB]/20 relative overflow-hidden font-sans">
+    <footer 
+      ref={footerRef}
+      className="bg-[#EEEEEE] text-[#393E46] pt-16 pb-8 px-6 sm:px-10 lg:px-16 border-t border-[#929AAB]/20 relative overflow-hidden font-sans"
+    >
       
       {/* Background CAD linework hint */}
       <div className="absolute inset-0 bg-cad-grid-dense opacity-20 pointer-events-none" />
@@ -76,9 +88,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Brand Emblem */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#393E46] text-[#F7F7F7] flex items-center justify-center shadow-xs">
+            <motion.div 
+              whileHover={{ rotate: 180 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="w-10 h-10 rounded-full bg-[#393E46] text-[#F7F7F7] flex items-center justify-center shadow-xs cursor-default"
+            >
               <DraftingCompass className="w-5 h-5" />
-            </div>
+            </motion.div>
             <div>
               <span className="font-bold text-sm tracking-wider uppercase font-sans text-[#393E46] block">
                 {personalInfo.name}
@@ -101,31 +117,37 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
             {/* Social Icons */}
             <div className="flex items-center gap-2">
-              <a
+              <motion.a
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] hover:border-[#393E46] transition-colors"
+                whileHover={{ scale: 1.1, backgroundColor: '#393E46', color: '#F7F7F7' }}
+                whileTap={{ scale: 0.95 }}
+                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-3.5 h-3.5" />
-              </a>
+              </motion.a>
 
-              <a
+              <motion.a
                 href={`mailto:${personalInfo.email}`}
-                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] hover:border-[#393E46] transition-colors"
+                whileHover={{ scale: 1.1, backgroundColor: '#393E46', color: '#F7F7F7' }}
+                whileTap={{ scale: 0.95 }}
+                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] transition-colors"
                 aria-label="Email"
               >
                 <Mail className="w-3.5 h-3.5" />
-              </a>
+              </motion.a>
 
-              <button
+              <motion.button
                 onClick={() => onNavigate('contact')}
-                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] hover:bg-[#393E46] hover:text-[#F7F7F7] hover:border-[#393E46] transition-colors cursor-pointer"
+                whileHover={{ scale: 1.1, backgroundColor: '#393E46', color: '#F7F7F7' }}
+                whileTap={{ scale: 0.95 }}
+                className="w-8 h-8 flex items-center justify-center bg-[#F7F7F7] border border-[#929AAB]/30 text-[#393E46] transition-colors cursor-pointer"
                 aria-label="Contact"
               >
                 <Send className="w-3.5 h-3.5" />
-              </button>
+              </motion.button>
             </div>
 
           </div>
@@ -146,14 +168,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   {link.id ? (
                     <button
                       onClick={() => onNavigate(link.id!)}
-                      className="hover:text-[#393E46] hover:underline transition-colors text-left cursor-pointer"
+                      className="hover:text-[#393E46] hover:translate-x-1 transition-all text-left cursor-pointer inline-block"
                     >
                       {link.label}
                     </button>
                   ) : (
                     <a
                       href={link.href}
-                      className="hover:text-[#393E46] hover:underline transition-colors inline-flex items-center gap-1"
+                      className="hover:text-[#393E46] hover:translate-x-1 transition-all inline-flex items-center gap-1"
                     >
                       <span>{link.label}</span>
                     </a>
@@ -174,7 +196,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   {link.id ? (
                     <button
                       onClick={() => onNavigate(link.id!)}
-                      className="hover:text-[#393E46] hover:underline transition-colors text-left cursor-pointer"
+                      className="hover:text-[#393E46] hover:translate-x-1 transition-all text-left cursor-pointer inline-block"
                     >
                       {link.label}
                     </button>
@@ -183,10 +205,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                       href={link.href}
                       target={link.isExternal ? '_blank' : undefined}
                       rel={link.isExternal ? 'noreferrer' : undefined}
-                      className="hover:text-[#393E46] hover:underline transition-colors inline-flex items-center gap-1"
+                      className="hover:text-[#393E46] hover:translate-x-1 transition-all inline-flex items-center gap-1 group"
                     >
                       <span>{link.label}</span>
-                      {link.isExternal && <ArrowUpRight className="w-2.5 h-2.5 text-[#929AAB]" />}
+                      {link.isExternal && <ArrowUpRight className="w-2.5 h-2.5 text-[#929AAB] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />}
                     </a>
                   )}
                 </li>
@@ -212,12 +234,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 placeholder="youremail@domain.com"
                 className="flex-1 min-w-0 px-3.5 py-2.5 bg-[#F7F7F7] border border-[#929AAB]/30 text-xs text-[#393E46] placeholder-[#929AAB]/70 focus:outline-none focus:border-[#393E46] transition-colors font-sans"
               />
-              <button
+              <motion.button
                 type="submit"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 className="px-4 py-2.5 bg-[#393E46] text-[#F7F7F7] text-xs font-semibold uppercase tracking-wider hover:bg-[#393E46]/90 transition-colors whitespace-nowrap cursor-pointer shadow-xs"
               >
                 {subscribed ? 'Sent' : 'Connect'}
-              </button>
+              </motion.button>
             </form>
 
             <p className="text-[10px] text-[#929AAB] leading-relaxed font-sans max-w-md">
@@ -232,26 +256,29 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             © 2026 Vatsal Sonigra. All rights reserved. 
           </div>
-          <button
+          <motion.button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F7F7F7] hover:bg-[#393E46] hover:text-[#F7F7F7] border border-[#929AAB]/30 text-xs font-mono uppercase tracking-wider text-[#393E46] transition-colors cursor-pointer"
+            whileHover={{ scale: 1.03, backgroundColor: '#393E46', color: '#F7F7F7' }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#F7F7F7] border border-[#929AAB]/30 text-xs font-mono uppercase tracking-wider text-[#393E46] transition-colors cursor-pointer"
           >
             <span>Back to Top</span>
             <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+          </motion.button>
         </div>
 
-        {/* 4. Giant Outlined Watermark Typography */}
+        {/* 4. Giant Outlined Watermark Typography with Scroll Parallax */}
         <div className="pt-6 sm:pt-10 select-none pointer-events-none overflow-hidden text-center">
-          <span 
-            className="font-serif font-black tracking-tight text-[12vw] sm:text-[13vw] leading-none uppercase block whitespace-nowrap transition-all"
+          <motion.span 
+            className="font-serif font-black tracking-tight text-[12vw] sm:text-[13vw] leading-none uppercase block whitespace-nowrap will-change-transform"
             style={{ 
               WebkitTextStroke: '1.5px rgba(57, 62, 70, 0.18)', 
-              color: 'transparent' 
+              color: 'transparent',
+              y: watermarkY
             }}
           >
             Vatsal
-          </span>
+          </motion.span>
         </div>
 
       </div>
