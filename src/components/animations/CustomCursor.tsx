@@ -8,12 +8,11 @@ export const CustomCursor: React.FC = () => {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Smooth springs for outer ring
-  const springX = useSpring(mouseX, { stiffness: 450, damping: 28 });
-  const springY = useSpring(mouseY, { stiffness: 450, damping: 28 });
+  // Fast, ultra-smooth spring physics
+  const springX = useSpring(mouseX, { stiffness: 650, damping: 36 });
+  const springY = useSpring(mouseY, { stiffness: 650, damping: 36 });
 
   useEffect(() => {
-    // Only enable on devices with fine pointer (mouse/trackpad) & non-reduced motion
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -35,7 +34,6 @@ export const CustomCursor: React.FC = () => {
       setIsVisible(true);
     };
 
-    // Detect clickable elements for cursor expand effect
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (
@@ -84,13 +82,13 @@ export const CustomCursor: React.FC = () => {
         style={{
           x: springX,
           y: springY,
-          width: isHovered ? 40 : 26,
-          height: isHovered ? 40 : 26,
-          marginLeft: isHovered ? -20 : -13,
-          marginTop: isHovered ? -20 : -13,
+          width: isHovered ? 38 : 24,
+          height: isHovered ? 38 : 24,
+          marginLeft: isHovered ? -19 : -12,
+          marginTop: isHovered ? -19 : -12,
           backgroundColor: isHovered ? 'rgba(57, 62, 70, 0.06)' : 'transparent',
         }}
-        transition={{ duration: 0.15, ease: 'easeOut' }}
+        transition={{ duration: 0.12, ease: 'easeOut' }}
       />
     </div>
   );

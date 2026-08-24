@@ -17,10 +17,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
     offset: ['start end', 'end start'],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [-15, 15]);
 
   return (
-    <section id="about" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-[#EEEEEE] border-b border-[#929AAB]/20 relative">
+    <section id="about" className="py-20 sm:py-28 px-6 sm:px-10 lg:px-16 bg-[#EEEEEE] border-b border-[#929AAB]/20 relative">
       
       {/* Background CAD grid hint */}
       <div className="absolute inset-0 bg-cad-grid-dense opacity-40 pointer-events-none" />
@@ -31,19 +31,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
         <SectionHeader 
           index="[ SECTION 01 // OVERVIEW ]"
           title="About Me"
-          className="mb-12 sm:mb-16"
+          className="mb-10 sm:mb-14"
         />
 
         {/* Two-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Left Side: Professional Photograph with Clean Editorial Treatment & Parallax */}
           <motion.div 
             ref={imageContainerRef}
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 relative"
           >
             {/* Technical Outer Frame Container */}
@@ -54,7 +54,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
                 className="absolute -top-2 -left-2 font-mono text-[10px] text-[#393E46] leading-none select-none"
               >
                 +
@@ -63,7 +63,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.25 }}
+                transition={{ duration: 0.2, delay: 0.13 }}
                 className="absolute -top-2 -right-2 font-mono text-[10px] text-[#393E46] leading-none select-none"
               >
                 +
@@ -72,7 +72,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 }}
+                transition={{ duration: 0.2, delay: 0.16 }}
                 className="absolute -bottom-2 -left-2 font-mono text-[10px] text-[#393E46] leading-none select-none"
               >
                 +
@@ -81,7 +81,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.35 }}
+                transition={{ duration: 0.2, delay: 0.19 }}
                 className="absolute -bottom-2 -right-2 font-mono text-[10px] text-[#393E46] leading-none select-none"
               >
                 +
@@ -99,7 +99,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                   style={{ y: imageY }}
                   src={vatsalImage}
                   alt="Vatsal Sonigra - Electrical Design Engineer"
-                  className="w-full h-full object-cover object-center grayscale contrast-115 filter transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 will-change-transform"
+                  className="w-full h-full object-cover object-center grayscale contrast-115 filter transition-all duration-400 group-hover:grayscale-0 group-hover:scale-103 will-change-transform"
                   referrerPolicy="no-referrer"
                 />
 
@@ -119,11 +119,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
             {/* Quick Experience Detail Tag */}
             <motion.div 
               whileHover={{ y: -2 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.15 }}
               className="mt-4 p-4 bg-[#F7F7F7] border border-[#929AAB]/30 flex items-center justify-between text-xs font-mono group cursor-default"
             >
               <div className="flex items-center gap-2 text-[#393E46]">
-                <Crosshair className="w-3.5 h-3.5 text-[#393E46] group-hover:rotate-90 transition-transform duration-300" />
+                <Crosshair className="w-3.5 h-3.5 text-[#393E46] group-hover:rotate-90 transition-transform duration-200" />
                 <span className="font-medium">Drawings & Schematics</span>
               </div>
               <span className="font-bold text-[#393E46]">{personalInfo.drawingsCount}</span>
@@ -132,53 +132,53 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
 
           {/* Right Side: Editorial Biography & Technical Metadata Block */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 flex flex-col justify-between"
           >
             <div>
               {/* Subheading with Expanding Line */}
-              <div className="text-lg sm:text-xl font-medium text-[#393E46] tracking-tight mb-8 flex items-center gap-3 font-sans">
+              <div className="text-lg sm:text-xl font-medium text-[#393E46] tracking-tight mb-6 flex items-center gap-3 font-sans">
                 <span>Electrical Design Engineer</span>
                 <motion.div 
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+                  transition={{ duration: 0.45, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
                   className="w-12 h-[1px] bg-[#929AAB] origin-left" 
                 />
               </div>
 
-              {/* Professional Biography Paragraphs with Stagger */}
+              {/* Professional Biography Paragraphs */}
               <motion.div 
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ staggerChildren: 0.15 }}
-                className="space-y-5 text-sm sm:text-base text-[#393E46]/85 leading-relaxed font-sans mb-10"
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ staggerChildren: 0.08 }}
+                className="space-y-4 text-sm sm:text-base text-[#393E46]/85 leading-relaxed font-sans mb-8"
               >
                 <motion.p
                   variants={{
-                    hidden: { opacity: 0, y: 15 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }
                   }}
                 >
                   I am an <strong>Electrical Design Engineer</strong> specializing in <strong>AutoCAD-based electrical design and technical documentation</strong>. My work is anchored in translating complex power distribution architectures into structured, precise, and code-compliant 2D drawings.
                 </motion.p>
                 <motion.p
                   variants={{
-                    hidden: { opacity: 0, y: 15 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }
                   }}
                 >
-                  From single line diagrams (SLD) and switchboard feeder layouts to lighting circuit loops, conduit containment, and panel schedules, I approach every drawing set with an uncompromising focus on <strong>technical accuracy, dimensional rigor, and attention to detail</strong>.
+                  From single line diagrams (SLD) and switchboard feeder routing to lighting circuit loops, conduit containment, and panel schedules, I approach every drawing set with an uncompromising focus on <strong>technical accuracy, dimensional rigor, and attention to detail</strong>.
                 </motion.p>
                 <motion.p
                   variants={{
-                    hidden: { opacity: 0, y: 15 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }
                   }}
                 >
                   By standardizing layer conventions, equipment symbology, and annotation hierarchies, I ensure engineering drawings are not only mathematically sound, but also seamlessly readable for electrical contractors, municipal inspectors, and site construction teams.
@@ -187,14 +187,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
 
               {/* Technical Information Block */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="p-6 bg-[#F7F7F7] border border-[#929AAB]/30 mb-8 divide-y divide-[#929AAB]/20 shadow-2xs"
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="p-5 bg-[#F7F7F7] border border-[#929AAB]/30 mb-6 divide-y divide-[#929AAB]/20 shadow-2xs"
               >
                 {/* ROLE */}
-                <div className="pb-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                <div className="pb-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
                     ROLE
                   </span>
@@ -204,7 +204,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 </div>
 
                 {/* SPECIALIZATION */}
-                <div className="py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                <div className="py-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
                     SPECIALIZATION
                   </span>
@@ -214,7 +214,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                 </div>
 
                 {/* FOCUS */}
-                <div className="pt-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                <div className="pt-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
                     CORE FOCUS
                   </span>
@@ -228,21 +228,21 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               <motion.div 
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ staggerChildren: 0.08 }}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-[#393E46] mb-8"
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ staggerChildren: 0.05 }}
+                className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-mono text-[#393E46] mb-8"
               >
                 {[
                   'Single Line Diagrams (SLD)',
                   '2D Power & Lighting Layouts',
                   'Conduit & Cable Tray Routing',
-                  'IEC & IEEE Drafting Standards'
+                  'IEC & IEEE Design Standards'
                 ].map((item, index) => (
                   <motion.div
                     key={index}
                     variants={{
-                      hidden: { opacity: 0, x: -10 },
-                      visible: { opacity: 1, x: 0, transition: { duration: 0.4 } }
+                      hidden: { opacity: 0, x: -8 },
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] } }
                     }}
                     className="flex items-center gap-2"
                   >
@@ -253,15 +253,16 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               </motion.div>
             </div>
 
-            {/* Action Link with Animated Hover */}
+            {/* Action Link */}
             <div>
               <motion.button
                 onClick={onContactClick}
                 whileHover={{ x: 3 }}
+                transition={{ duration: 0.15 }}
                 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#393E46] group cursor-pointer pb-1 border-b border-[#393E46]"
               >
                 <span>Discuss a Project or Collaboration</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-150" />
               </motion.button>
             </div>
 

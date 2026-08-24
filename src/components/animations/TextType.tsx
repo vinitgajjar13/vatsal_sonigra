@@ -11,9 +11,9 @@ interface TextTypeProps {
 
 export const TextType: React.FC<TextTypeProps> = ({
   words,
-  typingSpeed = 70,
-  deletingSpeed = 40,
-  pauseDuration = 2200,
+  typingSpeed = 45,
+  deletingSpeed = 24,
+  pauseDuration = 1500,
   className = '',
   cursorClassName = 'bg-[#393E46]',
 }) => {
@@ -22,7 +22,6 @@ export const TextType: React.FC<TextTypeProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    // Check for reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setDisplayedText(words[0] || '');

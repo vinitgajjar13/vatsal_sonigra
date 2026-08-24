@@ -12,40 +12,40 @@ export const SkillsSection: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 bg-[#EEEEEE] border-b border-[#929AAB]/20 relative">
+    <section id="skills" className="py-20 sm:py-28 px-6 sm:px-10 lg:px-16 bg-[#EEEEEE] border-b border-[#929AAB]/20 relative">
       
       {/* Background Grid */}
       <div className="absolute inset-0 bg-cad-grid-dense opacity-40 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Section Header with Expanding CAD Axis Line & Blur Title */}
+        {/* Section Header */}
         <SectionHeader
           index="[ SECTION 03 // COMPETENCY MATRIX ]"
           title="Skills & Expertise"
-          subtitle="Structured core competencies across electrical engineering fundamentals, precision AutoCAD 2D drafting, and disciplined technical documentation."
-          className="mb-16 sm:mb-20"
+          subtitle="Structured core competencies across electrical engineering fundamentals, precision AutoCAD 2D Design, and disciplined technical documentation."
+          className="mb-12 sm:mb-16"
         />
 
         {/* 3 Structured Category Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {skillCategories.map((categoryGroup, idx) => (
             <motion.div
               key={categoryGroup.id}
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4 }}
-              className="bg-[#F7F7F7] border border-[#929AAB]/30 p-6 sm:p-8 flex flex-col justify-between shadow-2xs relative group hover:border-[#393E46] transition-all duration-300"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -3 }}
+              className="bg-[#F7F7F7] border border-[#929AAB]/30 p-6 sm:p-7 flex flex-col justify-between shadow-2xs relative group hover:border-[#393E46] transition-all duration-200"
             >
               {/* Category Top Indicator */}
               <div>
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#929AAB]/20">
+                <div className="flex items-center justify-between pb-3.5 mb-5 border-b border-[#929AAB]/20">
                   <div className="flex items-center gap-2.5">
                     <motion.div
                       whileHover={{ rotate: 15 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.15 }}
                     >
                       {categoryIcons[categoryGroup.id]}
                     </motion.div>
@@ -58,22 +58,22 @@ export const SkillsSection: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-normal text-[#393E46] font-serif mb-3">
+                <h3 className="text-2xl font-normal text-[#393E46] font-serif mb-2.5">
                   {categoryGroup.category}
                 </h3>
 
-                <p className="text-xs text-[#393E46]/75 leading-relaxed font-sans mb-8">
+                <p className="text-xs text-[#393E46]/75 leading-relaxed font-sans mb-6">
                   {categoryGroup.description}
                 </p>
 
-                {/* Skills Item List with Stagger */}
-                <div className="space-y-3.5">
+                {/* Skills Item List */}
+                <div className="space-y-2.5">
                   {categoryGroup.skills.map((skill, sIdx) => (
                     <motion.div 
                       key={sIdx}
                       whileHover={{ x: 2 }}
-                      transition={{ duration: 0.15 }}
-                      className="p-3 bg-[#EEEEEE] border border-[#929AAB]/20 space-y-1 hover:bg-[#EEEEEE]/90 hover:border-[#929AAB]/50 transition-all cursor-default"
+                      transition={{ duration: 0.1 }}
+                      className="p-2.5 bg-[#EEEEEE] border border-[#929AAB]/20 space-y-0.5 hover:bg-[#EEEEEE]/90 hover:border-[#929AAB]/50 transition-all cursor-default"
                     >
                       <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 bg-[#393E46]" />
@@ -90,7 +90,7 @@ export const SkillsSection: React.FC = () => {
               </div>
 
               {/* Card Bottom Meta */}
-              <div className="mt-8 pt-4 border-t border-[#929AAB]/20 flex items-center justify-between text-[10px] font-mono text-[#929AAB]">
+              <div className="mt-6 pt-3.5 border-t border-[#929AAB]/20 flex items-center justify-between text-[10px] font-mono text-[#929AAB]">
                 <span>STANDARDIZED PRACTICE</span>
                 <span className="text-[#393E46] font-semibold">VERIFIED</span>
               </div>

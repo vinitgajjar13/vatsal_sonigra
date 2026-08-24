@@ -3,14 +3,14 @@ import { motion } from 'motion/react';
 
 /**
  * INTRO SCREEN CONFIGURATION
- * Easily adjust typing speeds, pauses, and display duration here.
+ * Smooth, snappy typing speed and transitions.
  */
 export const INTRO_CONFIG = {
-  INITIAL_DELAY_MS: 400,     // Delay before typing begins
-  TYPING_SPEED_MS: 80,       // Average delay between characters
-  LINE_PAUSE_MS: 500,        // Pause between line 1 ("Hi") and line 2 ("I am Vatsal Sonigra")
-  HOLD_DURATION_MS: 1500,    // Time to hold the completed text before fading out
-  FADE_DURATION_S: 0.8,      // Duration of the fade-out transition
+  INITIAL_DELAY_MS: 180,     // Snappy delay before typing begins
+  TYPING_SPEED_MS: 42,       // Fast, crisp typing speed
+  LINE_PAUSE_MS: 220,        // Crisp pause between line 1 ("Hi") and line 2
+  HOLD_DURATION_MS: 750,     // Balanced hold of completed text before smooth fade
+  FADE_DURATION_S: 0.45,     // Fast, elegant fade-out transition
 };
 
 interface IntroScreenProps {
@@ -57,18 +57,18 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
       // Short impulsive decay
       osc.type = 'sine';
       osc.frequency.setValueAtTime(340 + Math.random() * 60, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.022);
+      osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.018);
 
       // Very subtle and low volume
       gain.gain.setValueAtTime(0.035, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.022);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.018);
 
       osc.connect(filter);
       filter.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.022);
+      osc.stop(ctx.currentTime + 0.018);
     } catch {
       // Gracefully handle any browser audio block
     }
@@ -90,7 +90,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
       setLine1(FULL_LINE_1);
       setLine2(FULL_LINE_2);
       setIsTypingComplete(true);
-      const timer = setTimeout(handleFinish, 1200);
+      const timer = setTimeout(handleFinish, 600);
       return () => {
         clearTimeout(timer);
         document.body.style.overflow = '';
@@ -99,7 +99,6 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
 
     const timeouts: NodeJS.Timeout[] = [];
 
-    // Helper for scheduling
     const schedule = (fn: () => void, delay: number) => {
       const id = setTimeout(fn, delay);
       timeouts.push(id);
@@ -111,7 +110,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
     // Step 1: Type Line 1 ("Hi")
     for (let i = 0; i < FULL_LINE_1.length; i++) {
       const char = FULL_LINE_1[i];
-      const charDelay = INTRO_CONFIG.TYPING_SPEED_MS + (Math.random() * 20 - 10);
+      const charDelay = INTRO_CONFIG.TYPING_SPEED_MS + (Math.random() * 10 - 5);
       currentTime += charDelay;
 
       schedule(() => {
@@ -129,7 +128,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
     // Step 3: Type Line 2 ("I am Vatsal Sonigra")
     for (let i = 0; i < FULL_LINE_2.length; i++) {
       const char = FULL_LINE_2[i];
-      const charDelay = INTRO_CONFIG.TYPING_SPEED_MS + (Math.random() * 24 - 12);
+      const charDelay = INTRO_CONFIG.TYPING_SPEED_MS + (Math.random() * 12 - 6);
       currentTime += charDelay;
 
       schedule(() => {
@@ -139,7 +138,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
     }
 
     // Step 4: Typing completed
-    currentTime += 100;
+    currentTime += 50;
     schedule(() => {
       setIsTypingComplete(true);
     }, currentTime);
@@ -174,7 +173,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
       key="intro-screen-overlay"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: INTRO_CONFIG.FADE_DURATION_S, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: INTRO_CONFIG.FADE_DURATION_S, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-0 z-50 bg-[#EEEEEE] flex flex-col items-center justify-center px-6 sm:px-12 select-none overflow-hidden"
       aria-live="polite"
       role="region"

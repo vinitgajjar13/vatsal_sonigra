@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { IntroScreen } from './components/IntroScreen';
 import { CustomCursor } from './components/animations/CustomCursor';
@@ -12,64 +12,148 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(() => {
-    // Check if visitor has already viewed the intro in this browser session
+  // Always show intro screen on page load / refresh
+  const [showIntro, setShowIntro] = useState(true);
+
+  // View state: 'home' or 'all-projects'
+  const [currentView, setCurrentView] = useState<'home' | 'all-projects'>(() => {
     if (typeof window !== 'undefined') {
-      const hasSeen = sessionStorage.getItem('vatsal_portfolio_intro_seen');
-      return !hasSeen;
+      return window.location.hash === '#all-projects' ? 'all-projects' : 'home';
     }
-    return true;
+    return 'home';
   });
 
-  const [currentView, setCurrentView] = useState<'home' | 'all-projects'>('home');
   const [activeSection, setActiveSection] = useState('hero');
+  const [contactSubject, setContactSubject] = useState('');
+  const [pendingScrollSection, setPendingScrollSection] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
+    stiffness: 280,
+    damping: 28,
     restDelta: 0.001
   });
 
+  // Accurate, reliable cross-browser scroll executor
+  const performSmoothScroll = useCallback((sectionId: string) => {
+    // Ensure body scroll lock is cleared
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+
+    if (sectionId === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const navOffset = window.innerWidth < 768 ? 65 : 80;
+      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const targetPosition = elementPosition - navOffset;
+
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: 'smooth',
+      });
+    }
+  }, []);
+
   const handleIntroComplete = () => {
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('vatsal_portfolio_intro_seen', 'true');
-    }
     setShowIntro(false);
-  };
-
-  const handleNavigate = (sectionId: string) => {
-    if (currentView !== 'home') {
-      setCurrentView('home');
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 80);
-    } else {
-      const el = document.getElementById(sectionId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Check if initial URL had a hash to scroll to
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && hash !== 'all-projects') {
+        setTimeout(() => {
+          performSmoothScroll(hash);
+        }, 120);
       }
     }
   };
 
-  const handleViewAllProjects = () => {
-    setCurrentView('all-projects');
-  };
-
-  const handleBackToHome = (targetSection = 'projects') => {
-    setCurrentView('home');
-    setTimeout(() => {
-      const el = document.getElementById(targetSection);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Primary navigation handler
+  const handleNavigate = useCallback((sectionId: string) => {
+    // 1. If currently in 'all-projects' view and user wants a home section
+    if (currentView !== 'home') {
+      if (window.location.hash !== `#${sectionId}`) {
+        window.history.pushState(null, '', `#${sectionId}`);
       }
-    }, 80);
-  };
+      setPendingScrollSection(sectionId);
+      setCurrentView('home');
+      return;
+    }
 
-  // Active section observer on scroll (when on home page)
+    // 2. If already in home view
+    if (window.location.hash !== `#${sectionId}`) {
+      window.history.pushState(null, '', `#${sectionId}`);
+    }
+    performSmoothScroll(sectionId);
+  }, [currentView, performSmoothScroll]);
+
+  // Navigate to All Projects page
+  const handleViewAllProjects = useCallback(() => {
+    if (window.location.hash !== '#all-projects') {
+      window.history.pushState(null, '', '#all-projects');
+    }
+    setCurrentView('all-projects');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  // Back to home view handler
+  const handleBackToHome = useCallback((targetSection = 'projects') => {
+    if (window.location.hash !== `#${targetSection}`) {
+      window.history.pushState(null, '', `#${targetSection}`);
+    }
+    setPendingScrollSection(targetSection);
+    setCurrentView('home');
+  }, []);
+
+  // When returning to home view, execute any pending scroll target
+  useEffect(() => {
+    if (currentView === 'home' && pendingScrollSection) {
+      const target = pendingScrollSection;
+      setPendingScrollSection(null);
+      // Allow DOM to finish mounting
+      const timer = setTimeout(() => {
+        performSmoothScroll(target);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [currentView, pendingScrollSection, performSmoothScroll]);
+
+  const handleInquireFromProject = useCallback((projectTitle: string) => {
+    setContactSubject(`Inquiry regarding: ${projectTitle}`);
+    handleNavigate('contact');
+  }, [handleNavigate]);
+
+  // Synchronize browser history / URL hash changes (Back & Forward buttons)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'all-projects') {
+        setCurrentView('all-projects');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        if (currentView !== 'home') {
+          setPendingScrollSection(hash || 'hero');
+          setCurrentView('home');
+        } else if (hash) {
+          performSmoothScroll(hash);
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
+  }, [currentView, performSmoothScroll]);
+
+  // Active section observer on scroll
   useEffect(() => {
     if (currentView !== 'home') {
       setActiveSection('projects');
@@ -79,7 +163,7 @@ export default function App() {
     const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
     
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 180;
       
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -103,7 +187,7 @@ export default function App() {
       {/* Precision CAD Custom Cursor for Desktop */}
       <CustomCursor />
 
-      {/* 0. Fullscreen Minimalist Intro Screen with Typing Animation */}
+      {/* 0. Fullscreen Minimalist Intro Screen with Typing Animation (Plays on page load/refresh) */}
       <AnimatePresence mode="wait">
         {showIntro && (
           <IntroScreen key="intro-screen" onComplete={handleIntroComplete} />
@@ -121,58 +205,48 @@ export default function App() {
         {/* Navigation Bar */}
         <Navbar 
           activeSection={activeSection}
+          currentView={currentView}
           onNavigate={handleNavigate}
         />
 
-        <AnimatePresence mode="wait">
-          {currentView === 'home' ? (
-            <motion.main
-              key="home-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* 1. Hero Section (Spacious, Typography-Driven, animated CAD linework) */}
-              <HeroSection 
-                onViewWork={() => handleNavigate('projects')}
-                onGetInTouch={() => handleNavigate('contact')}
-              />
+        {/* Views Container */}
+        {currentView === 'home' ? (
+          <main key="home-view" className="w-full">
+            {/* 1. Hero Section */}
+            <HeroSection 
+              onViewWork={() => handleNavigate('projects')}
+              onGetInTouch={() => handleNavigate('contact')}
+            />
 
-              {/* 2. About Section (Editorial Portrait with Technical Frame, Biography & Info Block) */}
-              <AboutSection 
-                onContactClick={() => handleNavigate('contact')}
-              />
+            {/* 2. About Section */}
+            <AboutSection 
+              onContactClick={() => handleNavigate('contact')}
+            />
 
-              {/* 3. Selected Work / Projects Section (Displays 3 Featured Projects + View All Button) */}
-              <ProjectsSection 
-                onStartInquiry={(_projectName) => handleNavigate('contact')}
-                onViewAllProjects={handleViewAllProjects}
-              />
+            {/* 3. Selected Work / Projects Section */}
+            <ProjectsSection 
+              onStartInquiry={handleInquireFromProject}
+              onViewAllProjects={handleViewAllProjects}
+            />
 
-              {/* 4. Skills & Expertise (Electrical Design, AutoCAD, Professional Skills) */}
-              <SkillsSection />
+            {/* 4. Skills & Expertise */}
+            <SkillsSection />
 
-              {/* 5. Contact Section ("Let's Connect") */}
-              <ContactSection />
-            </motion.main>
-          ) : (
-            <motion.main
-              key="all-projects-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <AllProjectsPage 
-                onBackToHome={handleBackToHome}
-                onContactClick={() => handleNavigate('contact')}
-              />
-            </motion.main>
-          )}
-        </AnimatePresence>
+            {/* 5. Contact Section */}
+            <ContactSection 
+              initialSubject={contactSubject}
+            />
+          </main>
+        ) : (
+          <main key="all-projects-view" className="w-full">
+            <AllProjectsPage 
+              onBackToHome={handleBackToHome}
+              onContactClick={() => handleNavigate('contact')}
+            />
+          </main>
+        )}
 
-        {/* 6. Footer (Minimal, Technical, Back to Top) */}
+        {/* 6. Footer */}
         <Footer 
           onNavigate={handleNavigate}
         />

@@ -25,21 +25,21 @@ export const projectsList: ProjectItem[] = [
     description: 'AutoCAD-based electrical drawings and technical documentation developed for project requirements. Prepared primary power distribution drawings, switchboard feeder routing, emergency egress lighting circuits, and coordinated load schedules.',
     imageUrl: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
     tools: ['AutoCAD', 'Electrical Design', 'Technical Documentation'],
-    skills: ['2D Drafting', 'Lighting Layouts', 'Power Distribution', 'Panel Schedules', 'Circuit Annotation'],
+    skills: ['2D Design', 'Lighting Layouts', 'Power Distribution', 'Panel Schedules', 'Circuit Annotation'],
     deliverables: [
       'Complete Floor Power & Receptacle Layouts (DWG/PDF)',
       'Lighting Fixture Switching & Emergency Egress Plans',
       'Main Distribution Board (MDB) & Sub-Panel Schedules',
       'Cable Tray Containment & Riser Details'
     ],
-    overview: 'Engineering and comprehensive 2D CAD drafting for a multi-tenant corporate office building, ensuring full adherence to electrical safety codes, voltage drop limits, and spatial coordination.',
-    objective: 'Develop clean, standardized, and revision-controlled AutoCAD drawing sets for electrical contractors and site execution teams.',
+    overview: 'Engineering and comprehensive 2D CAD Design for a multi-tenant corporate office building, ensuring full adherence to electrical safety codes, voltage drop limits, and spatial coordination.',
+    objective: 'Develop clean, STANDARDIZED, and revision-controlled AutoCAD drawing sets for electrical contractors and site execution teams.',
     role: 'Electrical Design Engineer',
     responsibilities: [
       'Drafted floor-by-floor lighting layouts with distinct emergency and standard circuits.',
       'Constructed single line diagrams (SLD) and connected load schedules for all distribution boards.',
       'Sized cable trays and coordinated vertical riser routes with architectural structural drawings.',
-      'Standardized layer naming, line weights, dimension styles, and equipment block libraries.'
+      'STANDARDIZED layer naming, line weights, dimension styles, and equipment block libraries.'
     ],
     designProcess: [
       'Load Estimation & Preliminary Circuiting Calculations',
@@ -70,7 +70,7 @@ export const projectsList: ProjectItem[] = [
       'Transformer & Diesel Generator Interlock Details',
       'Detailed Cable Schedule & Breaker Trip Settings Matrix'
     ],
-    overview: 'A high-precision documentation project focusing on industrial power reliability, safety interlocks, and standardized electrical schematics for plant maintenance teams.',
+    overview: 'A high-precision documentation project focusing on industrial power reliability, safety interlocks, and STANDARDIZED electrical schematics for plant maintenance teams.',
     objective: 'Translate complex process engineering requirements into structured, legible, and compliant electrical schematic drawings.',
     role: 'Electrical Design Engineer',
     responsibilities: [
@@ -85,7 +85,7 @@ export const projectsList: ProjectItem[] = [
       'AutoCAD Block Symbol Standard Alignment & Dynamic Attribute Tagging',
       'Engineering Review & Final As-Built Documentation Package'
     ],
-    finalResult: 'Created a standardized master schematic drawing set that expedited plant approval and serves as the operational baseline for facility engineers.',
+    finalResult: 'Created a STANDARDIZED master schematic drawing set that expedited plant approval and serves as the operational baseline for facility engineers.',
     drawingCode: 'DWG-SLD-2024-IND02',
     scale: 'N.T.S. (Schematic Standard)',
     sheetSize: 'ISO A0 / A1'
@@ -100,7 +100,7 @@ export const projectsList: ProjectItem[] = [
     tagline: 'Engineering drawings created and organized into clear, professional documentation.',
     description: 'Engineering drawings created and organized into clear, professional documentation. Included ceiling lighting loops, wall socket outlets, kitchen appliance circuits, vertical riser diagrams, and main metering room arrangements.',
     imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-    tools: ['AutoCAD', 'CAD Drafting', 'Documentation'],
+    tools: ['AutoCAD', 'CAD Design', 'Documentation'],
     skills: ['Residential Layouts', 'Conduit Routing', 'Vertical Risers', 'Meter Room Detailing'],
     deliverables: [
       'Unit Typology Electrical Floor Plans',
@@ -139,7 +139,7 @@ export const projectsList: ProjectItem[] = [
     description: 'Drafted technical layout plans for a 33/11kV electrical substation control building. Documented GIS switchgear panel placements, control & relay panels (CRP), battery charger rooms, cable trench cross-sections, and earthing grid layout.',
     imageUrl: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80',
     tools: ['AutoCAD', 'Electrical Design', 'Technical Documentation'],
-    skills: ['Substation Layouts', 'Cable Trench Sections', 'Earthing Grid Drafting', 'Equipment Clearance Detailing'],
+    skills: ['Substation Layouts', 'Cable Trench Sections', 'Earthing Grid Design', 'Equipment Clearance Detailing'],
     deliverables: [
       'Substation Control Room General Arrangement (GA)',
       'Cable Trench Routing & Section Elevation Details',
@@ -153,7 +153,7 @@ export const projectsList: ProjectItem[] = [
       'Drafted plan and section views of 33kV switchgear room with verified maintenance clearances.',
       'Constructed detailed earthing grid drawings indicating conductor size, depth, and earth electrodes.',
       'Detailed cable tray multi-tier arrangements inside trenches with separation for power and control cables.',
-      'Ensured all drawing annotations complied strictly with utility drafting guidelines.'
+      'Ensured all drawing annotations complied strictly with utility Design guidelines.'
     ],
     designProcess: [
       'Standard Utility Clearance Calculation & Equipment Sizing',
@@ -233,7 +233,7 @@ export const projectsList: ProjectItem[] = [
     ],
     designProcess: [
       'String Sizing Verification & Inverter MPPT Matching',
-      'AutoCAD Array Layout & Cable Conduit Path Drafting',
+      'AutoCAD Array Layout & Cable Conduit Path Design',
       'Single Line Diagram Construction & Protection Coordination',
       'Permit Sheet Compilation & As-Built Finalization'
     ],
@@ -260,12 +260,12 @@ export const skillCategories: SkillCategoryItem[] = [
   {
     id: 'autocad',
     category: 'AutoCAD',
-    description: 'Proficiency in computer-aided design tools and structured drafting workflows that produce precise, standardized technical documentation.',
+    description: 'Proficiency in computer-aided design tools and structured Design workflows that produce precise, STANDARDIZED technical documentation.',
     skills: [
-      { name: 'AutoCAD', details: 'Precision 2D drafting with strict geometric accuracy, snap controls, and clean linework.' },
-      { name: '2D Drafting', details: 'Floor plans, elevations, section details, risers, and single line schematics.' },
+      { name: 'AutoCAD', details: 'Precision 2D Design with strict geometric accuracy, snap controls, and clean linework.' },
+      { name: '2D Design', details: 'Floor plans, elevations, section details, risers, and single line schematics.' },
       { name: 'CAD Documentation', details: 'Layer management, template standardization, dynamic blocks, and external references (Xrefs).' },
-      { name: 'Technical Drawing', details: 'Drafting compliant with ISO, IEC, IEEE, and local building electrical standards.' },
+      { name: 'Technical Drawing', details: 'Design compliant with ISO, IEC, IEEE, and local building electrical standards.' },
       { name: 'Drawing Organization', details: 'Dimension styles, leader callouts, equipment tagging, and sheet title blocks.' }
     ]
   },
@@ -286,7 +286,7 @@ export const skillCategories: SkillCategoryItem[] = [
 export const autoCADFeatures: AutoCADFeatureItem[] = [
   {
     number: '01',
-    title: 'Electrical Drafting',
+    title: 'Electrical Design',
     description: 'Constructing geometrically accurate 2D electrical layouts with precise coordinate alignment, snapping discipline, and consistent symbol scaling.',
     layerName: '0_ELEC_POWER',
     standard: 'IEC 60617 / IEEE Std 315',
@@ -295,7 +295,7 @@ export const autoCADFeatures: AutoCADFeatureItem[] = [
   {
     number: '02',
     title: 'Design Documentation',
-    description: 'Compiling structured drawing sheets with standardized title blocks, revision history logs, scale bars, project metadata, and legend keys.',
+    description: 'Compiling structured drawing sheets with STANDARDIZED title blocks, revision history logs, scale bars, project metadata, and legend keys.',
     layerName: '0_ELEC_DOCS',
     standard: 'ISO 7200 / ISO 5457',
     workflowStep: 'Sheet Formulation & Metadata Tagging'
@@ -311,7 +311,7 @@ export const autoCADFeatures: AutoCADFeatureItem[] = [
   {
     number: '04',
     title: 'Technical Detailing',
-    description: 'Drafting detailed cross-sections, panel elevations, cable tray trench profiles, conduit wall penetrations, and earthing pit details.',
+    description: 'Design detailed cross-sections, panel elevations, cable tray trench profiles, conduit wall penetrations, and earthing pit details.',
     layerName: '0_ELEC_DETAIL',
     standard: 'LOD 300 / 350 Detailing',
     workflowStep: 'Section Generation & Enlarged Views'

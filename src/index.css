@@ -18,6 +18,16 @@
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  section[id], main [id] {
+    scroll-margin-top: 80px;
+  }
+
+  @media (max-width: 768px) {
+    section[id], main [id] {
+      scroll-margin-top: 65px;
+    }
+  }
 }
 
 /* Technical Drawing & CAD Grid Patterns */

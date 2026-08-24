@@ -182,7 +182,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
               <div className="space-y-4">
                 <div className="font-mono text-xs font-bold text-[#393E46] uppercase tracking-wider flex items-center gap-2">
                   <Layers className="w-3.5 h-3.5 text-[#393E46]" />
-                  <span>Design & Drafting Workflow</span>
+                  <span>Design & Design Workflow</span>
                 </div>
                 <div className="space-y-2 text-xs font-mono text-[#393E46]">
                   {project.designProcess.map((step, idx) => (

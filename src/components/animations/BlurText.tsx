@@ -14,7 +14,7 @@ export const BlurText: React.FC<BlurTextProps> = ({
   text,
   className = '',
   delay = 0,
-  stagger = 0.04,
+  stagger = 0.025,
   as = 'div',
   once = true,
 }) => {
@@ -34,16 +34,16 @@ export const BlurText: React.FC<BlurTextProps> = ({
   const wordVariants: Variants = {
     hidden: {
       opacity: 0,
-      filter: 'blur(10px)',
-      y: 20,
+      filter: 'blur(6px)',
+      y: 12,
     },
     visible: {
       opacity: 1,
       filter: 'blur(0px)',
       y: 0,
       transition: {
-        duration: 0.7,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+        duration: 0.42,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     },
   };
@@ -55,7 +55,7 @@ export const BlurText: React.FC<BlurTextProps> = ({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, margin: '-50px' }}
+      viewport={{ once, margin: '-30px' }}
       className={`inline-block ${className}`}
     >
       {words.map((word, index) => (

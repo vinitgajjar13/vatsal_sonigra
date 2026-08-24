@@ -14,7 +14,7 @@ export const SplitText: React.FC<SplitTextProps> = ({
   text,
   className = '',
   delay = 0,
-  stagger = 0.03,
+  stagger = 0.02,
   as = 'div',
   once = true,
 }) => {
@@ -34,16 +34,16 @@ export const SplitText: React.FC<SplitTextProps> = ({
   const wordVariants: Variants = {
     hidden: {
       opacity: 0,
-      y: 24,
-      scale: 0.96,
+      y: 14,
+      scale: 0.98,
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+        duration: 0.38,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     },
   };
@@ -55,7 +55,7 @@ export const SplitText: React.FC<SplitTextProps> = ({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, margin: '-50px' }}
+      viewport={{ once, margin: '-30px' }}
       className={`inline-block ${className}`}
     >
       {words.map((word, index) => (
