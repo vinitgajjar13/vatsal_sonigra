@@ -34,28 +34,60 @@ export default function App() {
     restDelta: 0.001
   });
 
-  // Accurate, reliable cross-browser scroll executor
-  const performSmoothScroll = useCallback((sectionId: string) => {
-    // Ensure body scroll lock is cleared
+  // Cross-device, bulletproof scroll executor
+  const performSmoothScroll = useCallback((rawId: string) => {
+    // 1. Guarantee no scroll lock remains
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
 
-    if (sectionId === 'hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
+    const sectionId = 
+      rawId === 'portfolio' || rawId === 'work' ? 'projects' 
+      : rawId === 'home' ? 'hero' 
+      : rawId;
 
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const navOffset = window.innerWidth < 768 ? 65 : 80;
-      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-      const targetPosition = elementPosition - navOffset;
+    const executeScroll = () => {
+      if (sectionId === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return true;
+      }
+
+      const el = document.getElementById(sectionId);
+      if (!el) return false;
+
+      const rect = el.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      // Fixed navbar height: 64px on mobile, 80px on desktop
+      const navbarHeight = window.innerWidth < 768 ? 64 : 80;
+      const targetY = Math.max(0, rect.top + currentScrollY - navbarHeight);
+
+      if (Math.abs(currentScrollY - targetY) < 4) {
+        return true;
+      }
 
       window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth',
+        top: targetY,
+        behavior: 'smooth'
       });
-    }
+      return true;
+    };
+
+    // Attempt 1: Immediate execution via requestAnimationFrame
+    requestAnimationFrame(() => {
+      executeScroll();
+    });
+
+    // Attempt 2: Mid-drawer collapse (~100ms)
+    // On mobile devices (iOS Safari & Android Chrome), collapsing the fixed mobile drawer
+    // causes layout reflows during the exit animation that can interrupt smooth scrolling.
+    setTimeout(() => {
+      executeScroll();
+    }, 100);
+
+    // Attempt 3: Post-drawer collapse settle (~240ms, mobile drawer animation is 200ms)
+    // Guarantees the viewport lands precisely at the target section on mobile devices.
+    setTimeout(() => {
+      executeScroll();
+    }, 240);
   }, []);
 
   const handleIntroComplete = () => {
@@ -73,8 +105,16 @@ export default function App() {
   };
 
   // Primary navigation handler
-  const handleNavigate = useCallback((sectionId: string) => {
-    // 1. If currently in 'all-projects' view and user wants a home section
+  const handleNavigate = useCallback((rawSectionId: string) => {
+    const sectionId = 
+      rawSectionId === 'portfolio' || rawSectionId === 'work' ? 'projects' 
+      : rawSectionId === 'home' ? 'hero' 
+      : rawSectionId;
+
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+
+    // 1. If in 'all-projects' view and user clicked a home section
     if (currentView !== 'home') {
       if (window.location.hash !== `#${sectionId}`) {
         window.history.pushState(null, '', `#${sectionId}`);
@@ -93,6 +133,9 @@ export default function App() {
 
   // Navigate to All Projects page
   const handleViewAllProjects = useCallback(() => {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+
     if (window.location.hash !== '#all-projects') {
       window.history.pushState(null, '', '#all-projects');
     }
@@ -102,22 +145,29 @@ export default function App() {
 
   // Back to home view handler
   const handleBackToHome = useCallback((targetSection = 'projects') => {
-    if (window.location.hash !== `#${targetSection}`) {
-      window.history.pushState(null, '', `#${targetSection}`);
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+
+    const sectionId = 
+      targetSection === 'portfolio' || targetSection === 'work' ? 'projects' 
+      : targetSection === 'home' ? 'hero' 
+      : targetSection;
+
+    if (window.location.hash !== `#${sectionId}`) {
+      window.history.pushState(null, '', `#${sectionId}`);
     }
-    setPendingScrollSection(targetSection);
+    setPendingScrollSection(sectionId);
     setCurrentView('home');
   }, []);
 
-  // When returning to home view, execute any pending scroll target
+  // Execute queued scroll target once Home view is mounted in DOM
   useEffect(() => {
     if (currentView === 'home' && pendingScrollSection) {
       const target = pendingScrollSection;
       setPendingScrollSection(null);
-      // Allow DOM to finish mounting
       const timer = setTimeout(() => {
         performSmoothScroll(target);
-      }, 80);
+      }, 60);
       return () => clearTimeout(timer);
     }
   }, [currentView, pendingScrollSection, performSmoothScroll]);
@@ -187,7 +237,7 @@ export default function App() {
       {/* Precision CAD Custom Cursor for Desktop */}
       <CustomCursor />
 
-      {/* 0. Fullscreen Minimalist Intro Screen with Typing Animation (Plays on page load/refresh) */}
+      {/* 0. Fullscreen Minimalist Intro Screen with Typing Animation (Plays on every page refresh) */}
       <AnimatePresence mode="wait">
         {showIntro && (
           <IntroScreen key="intro-screen" onComplete={handleIntroComplete} />

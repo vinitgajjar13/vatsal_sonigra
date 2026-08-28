@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ArrowUpRight, FileCheck, Layers, Wrench, CheckCircle2, DraftingCompass, Hash, FileCode, FileText } from 'lucide-react';
+import { X, ArrowUpRight, FileCheck, Layers, Wrench, CheckCircle2, DraftingCompass, FileText } from 'lucide-react';
 import { ProjectItem } from '../types';
 
 interface ProjectModalProps {
@@ -20,7 +20,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [project, onClose]);
@@ -29,7 +29,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto">
+      {/* Unified single scroll context: no nested scroll trapping */}
+      <div className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden p-3 sm:p-6 md:p-8 flex items-start justify-center">
         
         {/* Backdrop */}
         <motion.div
@@ -46,16 +47,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 20 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-4xl bg-[#F7F7F7] border border-[#929AAB]/40 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col z-10 text-[#393E46]"
+          className="relative w-full max-w-4xl bg-[#F7F7F7] border border-[#929AAB]/40 shadow-2xl z-10 text-[#393E46] my-4 sm:my-8"
         >
-          {/* Top Title Block / Technical Header */}
-          <div className="flex items-center justify-between px-6 sm:px-8 py-4 bg-[#EEEEEE] border-b border-[#929AAB]/30">
+          {/* Sticky Technical Header (Always accessible at top on mobile) */}
+          <div className="sticky top-0 z-20 flex items-center justify-between px-5 sm:px-8 py-3.5 sm:py-4 bg-[#EEEEEE] border-b border-[#929AAB]/30 shadow-xs">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#393E46] text-[#F7F7F7] font-mono font-bold text-xs flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#393E46] text-[#F7F7F7] font-mono font-bold text-xs flex items-center justify-center shrink-0">
                 {project.number}
               </div>
               <div>
-                <span className="text-[10px] font-mono text-[#929AAB] uppercase tracking-wider block leading-none">
+                <span className="text-[10px] font-mono text-[#525866] uppercase tracking-wider block leading-none">
                   TECHNICAL PROJECT SPECIFICATION
                 </span>
                 <span className="font-mono text-xs font-semibold text-[#393E46]">
@@ -65,21 +66,22 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             </div>
 
             <button
+              type="button"
               onClick={onClose}
-              className="p-2 text-[#929AAB] hover:text-[#393E46] hover:bg-[#F7F7F7] border border-[#929AAB]/20 transition-colors cursor-pointer"
+              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#525866] hover:text-[#393E46] hover:bg-[#F7F7F7] border border-[#929AAB]/30 transition-colors cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Modal Scrollable Body */}
-          <div className="p-6 sm:p-10 overflow-y-auto space-y-10 font-sans">
+          {/* Modal Body (Natural flow inside unified scroll container) */}
+          <div className="p-5 sm:p-10 space-y-8 sm:space-y-10 font-sans">
             
             {/* Project Header */}
             <div>
-              <div className="flex flex-wrap items-center gap-3 mb-3 text-xs font-mono text-[#929AAB]">
-                <span className="px-2 py-0.5 bg-[#EEEEEE] border border-[#929AAB]/30 text-[#393E46] font-semibold">
+              <div className="flex flex-wrap items-center gap-3 mb-3 text-xs font-mono text-[#525866]">
+                <span className="px-2.5 py-1 bg-[#EEEEEE] border border-[#929AAB]/30 text-[#393E46] font-semibold">
                   {project.category}
                 </span>
                 <span>•</span>
@@ -122,11 +124,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             {/* Project Metadata Grid: Tools & Role */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 bg-[#EEEEEE] border border-[#929AAB]/30 text-xs font-mono">
               <div>
-                <div className="text-[10px] text-[#929AAB] uppercase mb-1">ENGINEERING ROLE</div>
+                <div className="text-[10px] text-[#525866] uppercase mb-1">ENGINEERING ROLE</div>
                 <div className="font-semibold text-[#393E46]">{project.role}</div>
               </div>
               <div className="sm:col-span-2">
-                <div className="text-[10px] text-[#929AAB] uppercase mb-1">TOOLS USED</div>
+                <div className="text-[10px] text-[#525866] uppercase mb-1">TOOLS USED</div>
                 <div className="font-semibold text-[#393E46] flex flex-wrap gap-2">
                   {project.tools.map((tool, idx) => (
                     <span key={idx} className="px-2 py-0.5 bg-[#F7F7F7] border border-[#929AAB]/30">
@@ -138,7 +140,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             </div>
 
             {/* Section 1: Overview & Objective */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               <div className="space-y-2">
                 <div className="font-mono text-xs font-bold text-[#393E46] uppercase tracking-wider flex items-center gap-2">
                   <FileText className="w-3.5 h-3.5 text-[#393E46]" />
@@ -169,7 +171,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#393E46]/90">
                 {project.responsibilities.map((resp, idx) => (
                   <div key={idx} className="p-3 bg-[#EEEEEE] border border-[#929AAB]/20 flex items-start gap-2.5">
-                    <span className="font-mono text-[#929AAB] font-semibold">{idx + 1}.</span>
+                    <span className="font-mono text-[#525866] font-semibold">{idx + 1}.</span>
                     <span>{resp}</span>
                   </div>
                 ))}
@@ -177,17 +179,17 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             </div>
 
             {/* Section 3: Design Process & Deliverables */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Design Process */}
               <div className="space-y-4">
                 <div className="font-mono text-xs font-bold text-[#393E46] uppercase tracking-wider flex items-center gap-2">
                   <Layers className="w-3.5 h-3.5 text-[#393E46]" />
-                  <span>Design & Design Workflow</span>
+                  <span>Design & Workflow</span>
                 </div>
                 <div className="space-y-2 text-xs font-mono text-[#393E46]">
                   {project.designProcess.map((step, idx) => (
                     <div key={idx} className="p-2.5 bg-[#F7F7F7] border-l-2 border-[#393E46] pl-3">
-                      <span className="text-[#929AAB] mr-2">STEP {idx + 1}:</span>
+                      <span className="text-[#525866] mr-2">STEP {idx + 1}:</span>
                       <span>{step}</span>
                     </div>
                   ))}
@@ -223,21 +225,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
 
           </div>
 
-          {/* Modal Footer / Action CTA */}
-          <div className="px-6 sm:px-8 py-4 bg-[#EEEEEE] border-t border-[#929AAB]/30 flex flex-wrap items-center justify-between gap-4">
+          {/* Sticky Modal Footer / Action CTA */}
+          <div className="sticky bottom-0 z-20 px-5 sm:px-8 py-3.5 sm:py-4 bg-[#EEEEEE] border-t border-[#929AAB]/30 flex flex-wrap items-center justify-between gap-3 shadow-xs">
             <button
+              type="button"
               onClick={onClose}
-              className="text-xs font-mono uppercase tracking-wider text-[#929AAB] hover:text-[#393E46] transition-colors cursor-pointer"
+              className="min-h-[40px] px-3 py-2 text-xs font-mono uppercase tracking-wider text-[#525866] hover:text-[#393E46] transition-colors cursor-pointer"
             >
               [ Close Specification ]
             </button>
 
             <button
+              type="button"
               onClick={() => {
                 onClose();
                 onInquire(project.title);
               }}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#393E46] text-[#F7F7F7] text-xs font-semibold uppercase tracking-wider hover:bg-[#393E46]/90 transition-colors cursor-pointer"
+              className="min-h-[44px] inline-flex items-center gap-2 px-6 py-2.5 bg-[#393E46] text-[#F7F7F7] text-xs font-semibold uppercase tracking-wider hover:bg-[#393E46]/90 active:scale-98 transition-all cursor-pointer shadow-xs"
             >
               <span>Inquire About Similar Design Scope</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

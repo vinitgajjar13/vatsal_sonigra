@@ -53,7 +53,7 @@ export const SkillsSection: React.FC = () => {
                       CAT 0{idx + 1}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono text-[#929AAB]">
+                  <span className="text-[10px] font-mono text-[#525866]">
                     [ 0{categoryGroup.skills.length} ITEMS ]
                   </span>
                 </div>
@@ -90,7 +90,7 @@ export const SkillsSection: React.FC = () => {
               </div>
 
               {/* Card Bottom Meta */}
-              <div className="mt-6 pt-3.5 border-t border-[#929AAB]/20 flex items-center justify-between text-[10px] font-mono text-[#929AAB]">
+              <div className="mt-6 pt-3.5 border-t border-[#929AAB]/20 flex items-center justify-between text-[10px] font-mono text-[#525866]">
                 <span>STANDARDIZED PRACTICE</span>
                 <span className="text-[#393E46] font-semibold">VERIFIED</span>
               </div>

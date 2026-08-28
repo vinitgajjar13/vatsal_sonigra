@@ -6,7 +6,7 @@ export const personalInfo = {
   specialization: 'AutoCAD-Based Electrical Design & Documentation',
   focus: 'Electrical Drawings • Documentation • CAD',
   bio: 'Vatsal Sonigra is an Electrical Design Engineer specializing in AutoCAD-based electrical design and technical documentation. Dedicated to accuracy, structured drawing development, and rigorous attention to detail, he delivers clean 2D schematics, single line diagrams, conduit routing, and panel schedules that bridge engineering design with reliable field implementation.',
-  email: 'vatsalsonigra.engineering@gmail.com',
+  email: 'vatsalsonigra37@gmail.com',
   location: 'Available for Remote & On-Site Engineering Projects',
   linkedin: 'https://linkedin.com/in/vatsal-sonigra',
   experienceYears: 'Professional Practice',

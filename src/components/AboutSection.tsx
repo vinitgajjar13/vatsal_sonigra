@@ -88,7 +88,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               </motion.div>
 
               {/* Technical Annotation Bar Top */}
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#929AAB]/20 text-[9px] font-mono text-[#929AAB] tracking-widest uppercase">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#929AAB]/20 text-[9px] font-mono text-[#525866] tracking-widest uppercase">
                 <span>FIG 01.0 // ENGINEER PROFILE</span>
                 <span>STATUS: VERIFIED</span>
               </div>
@@ -112,7 +112,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               {/* Technical Annotation Bar Bottom */}
               <div className="pt-3 mt-1 flex items-center justify-between text-[10px] font-mono text-[#393E46]">
                 <span className="font-semibold uppercase tracking-wider">{personalInfo.name}</span>
-                <span className="text-[#929AAB]">AUTOCAD ELECTRICAL</span>
+                <span className="text-[#525866]">AUTOCAD ELECTRICAL</span>
               </div>
             </div>
 
@@ -195,7 +195,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
               >
                 {/* ROLE */}
                 <div className="pb-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                  <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
+                  <span className="font-mono text-[11px] font-bold text-[#525866] uppercase tracking-wider">
                     ROLE
                   </span>
                   <span className="font-sans text-sm font-semibold text-[#393E46]">
@@ -205,7 +205,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
 
                 {/* SPECIALIZATION */}
                 <div className="py-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                  <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
+                  <span className="font-mono text-[11px] font-bold text-[#525866] uppercase tracking-wider">
                     SPECIALIZATION
                   </span>
                   <span className="font-sans text-sm font-semibold text-[#393E46]">
@@ -215,7 +215,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
 
                 {/* FOCUS */}
                 <div className="pt-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                  <span className="font-mono text-[11px] font-bold text-[#929AAB] uppercase tracking-wider">
+                  <span className="font-mono text-[11px] font-bold text-[#525866] uppercase tracking-wider">
                     CORE FOCUS
                   </span>
                   <span className="font-sans text-sm font-semibold text-[#393E46]">
@@ -236,7 +236,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onContactClick }) =>
                   'Single Line Diagrams (SLD)',
                   '2D Power & Lighting Layouts',
                   'Conduit & Cable Tray Routing',
-                  'IEC & IEEE Design Standards'
+                  'Engineering Standards'
                 ].map((item, index) => (
                   <motion.div
                     key={index}
